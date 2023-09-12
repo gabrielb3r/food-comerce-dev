@@ -1,9 +1,21 @@
+import { useState, useEffect } from "react"
+
 import { Head } from "../../../components/Head"
 import { SnackTitle } from "../../../components/SnackTitle"
 import { Snacks } from "../../../components/Snacks"
 
+import { getPizzas } from "../../../services/api"
+
 export default function Pizzsas() {
-  const data = [
+
+  const [pizzas, setPizzas] = useState([])
+  useEffect(() => {
+    (async () => {
+      const pizzaRequest = await getPizzas()
+      setPizzas(pizzaRequest.data)
+    })()
+  }, [])
+  /*const data = [
     {
       id: 1,
       snack: "burguer",
@@ -44,12 +56,12 @@ export default function Pizzsas() {
       price: 20.00,
       image: "https://s2-casavogue.glbimg.com/GRF9KCq-1hiz5uSs-xX9Go_KqIc=/0x0:2048x1365/984x0/smart/filters:strip_icc()/i.s3.glbimg.com/v1/AUTH_d72fd4bf0af74c0c89d27a5a226dbbf8/internal_photos/bs/2022/p/X/eb4KQdToys327cGqnRGg/receita-ceboloni-bacon.jpg"
     },
-  ]
+  ]*/
   return (
     <>
       <Head title="Pizzas" />
       <SnackTitle> Pizzas </SnackTitle>
-      <Snacks snacks={data} />
+      <Snacks snacks={pizzas} />
     </>
   )
 }
